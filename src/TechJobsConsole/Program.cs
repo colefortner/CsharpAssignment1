@@ -63,7 +63,9 @@ namespace TechJobsConsole
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        //Console.WriteLine("Search all fields not yet implemented.");
+                        searchResults = JobData.FindByValue(columnChoices, searchTerm);
+                        PrintJobs(searchResults);
                     }
                     else
                     {
@@ -116,9 +118,26 @@ namespace TechJobsConsole
             return choiceKeys[choiceIdx];
         }
 
-        private static void PrintJobs(List<Dictionary<string, string>> someJobs)
+        private static void PrintJobs(IList<Dictionary<string, string>> someJobs)
         {
-            Console.WriteLine("PrintJobs is not implemented yet");
+            if (someJobs.Count == 0)
+            {
+                Console.WriteLine("\nno results found");
+            }
+
+            string stars = "*****";
+
+            foreach (Dictionary<string, string> jobs in someJobs)
+            {
+                Console.WriteLine(stars);
+                foreach (KeyValuePair<string, string> job in jobs)
+                {
+                    Console.WriteLine(job.Key + ": " + job.Value);
+                }
+                Console.WriteLine(stars);
+
+            }  
+
         }
     }
 }

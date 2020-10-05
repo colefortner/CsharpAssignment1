@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
+
 namespace TechJobsConsole
 {
     class JobData
@@ -10,10 +11,17 @@ namespace TechJobsConsole
         static List<Dictionary<string, string>> AllJobs = new List<Dictionary<string, string>>();
         static bool IsDataLoaded = false;
 
-        public static List<Dictionary<string, string>> FindAll()
+        public static IList<Dictionary<string, string>> FindAll()
         {
+            //LoadData();
+            //return AllJobs;
             LoadData();
-            return AllJobs;
+            //Dictionary<string, string>[] newAllJobs = new Dictionary<string, string>[AllJobs.Count];
+            //AllJobs.CopyTo(newAllJobs);
+            //List<Dictionary<string, string>> thisCantBeRight = new List<Dictionary<string, string>>(newAllJobs);
+            //return thisCantBeRight;
+            IList<Dictionary<string, string>> roAllJobs = AllJobs.AsReadOnly();
+            return roAllJobs;
         }
 
         /*
@@ -33,8 +41,11 @@ namespace TechJobsConsole
                 if (!values.Contains(aValue))
                 {
                     values.Add(aValue);
+                    values.Sort();
                 }
             }
+            //List<string> sortedvalues = values;       ask wtf is going on?
+            //sortedvalues.Sort();
             return values;
         }
 
@@ -49,7 +60,7 @@ namespace TechJobsConsole
             {
                 string aValue = row[column];
 
-                if (aValue.Contains(value))
+                if (aValue.ToLower().Contains(value.ToLower()))
                 {
                     jobs.Add(row);
                 }
@@ -138,5 +149,36 @@ namespace TechJobsConsole
 
             return rowValues.ToArray();
         }
+
+        public static List<Dictionary<string, string>> FindByValue(Dictionary<string, string> columns, string value)
+
+        {
+            //Dictionary<string, string> columnChoices = new Dictionary<string, string>();
+            columns.Remove("all");
+
+
+            LoadData();
+
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+            foreach (KeyValuePair<string, string> column in columns)
+            {
+
+
+                foreach (Dictionary<string, string> row in AllJobs)
+                {
+                    string aValue = row[column.Key];
+
+                    if (aValue.ToLower().Contains(value.ToLower()))
+                    {
+                        jobs.Add(row);
+                    }
+                }
+            }
+            columns.Add("all", "All");
+
+            return jobs;
+        }
     }
+
 }
+
