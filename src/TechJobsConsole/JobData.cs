@@ -13,13 +13,7 @@ namespace TechJobsConsole
 
         public static IList<Dictionary<string, string>> FindAll()
         {
-            //LoadData();
-            //return AllJobs;
             LoadData();
-            //Dictionary<string, string>[] newAllJobs = new Dictionary<string, string>[AllJobs.Count];
-            //AllJobs.CopyTo(newAllJobs);
-            //List<Dictionary<string, string>> thisCantBeRight = new List<Dictionary<string, string>>(newAllJobs);
-            //return thisCantBeRight;
             IList<Dictionary<string, string>> roAllJobs = AllJobs.AsReadOnly();
             return roAllJobs;
         }
@@ -44,8 +38,7 @@ namespace TechJobsConsole
                     values.Sort();
                 }
             }
-            //List<string> sortedvalues = values;       ask wtf is going on?
-            //sortedvalues.Sort();
+
             return values;
         }
 
@@ -153,17 +146,14 @@ namespace TechJobsConsole
         public static List<Dictionary<string, string>> FindByValue(Dictionary<string, string> columns, string value)
 
         {
-            //Dictionary<string, string> columnChoices = new Dictionary<string, string>();
             columns.Remove("all");
-
 
             LoadData();
 
             List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+
             foreach (KeyValuePair<string, string> column in columns)
             {
-
-
                 foreach (Dictionary<string, string> row in AllJobs)
                 {
                     string aValue = row[column.Key];

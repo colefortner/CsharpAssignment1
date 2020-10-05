@@ -134,7 +134,7 @@ namespace TechJobsConsole
                 {
                     Console.WriteLine(job.Key + ": " + job.Value);
                 }
-                Console.WriteLine(stars);
+                Console.WriteLine(stars + "\n");
 
             }  
 
