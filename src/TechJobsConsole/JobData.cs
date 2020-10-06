@@ -143,29 +143,25 @@ namespace TechJobsConsole
             return rowValues.ToArray();
         }
 
-        public static List<Dictionary<string, string>> FindByValue(Dictionary<string, string> columns, string value)
+
+        public static List<Dictionary<string, string>> FindByValue(string value)
 
         {
-            columns.Remove("all");
-
             LoadData();
 
             List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
 
-            foreach (KeyValuePair<string, string> column in columns)
+            foreach (Dictionary<string, string> row in AllJobs)
             {
-                foreach (Dictionary<string, string> row in AllJobs)
-                {
-                    string aValue = row[column.Key];
 
-                    if (aValue.ToLower().Contains(value.ToLower()))
+                foreach (KeyValuePair<string, string> aValue in row)
+
+                        if (row[aValue.Key].ToLower().Contains(value.ToLower()) && !jobs.Contains(row))
                     {
                         jobs.Add(row);
                     }
-                }
-            }
-            columns.Add("all", "All");
 
+            }
             return jobs;
         }
     }
